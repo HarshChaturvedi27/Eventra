@@ -1,44 +1,26 @@
-/* Updated to use modern Tailwind CSS directives.
-  '@import "tailwindcss/preflight"' replaces the old '@tailwind base'.
-  '@tailwind utilities' now handles the functionality of both components and utilities.
-*/
-@import "tailwindcss/preflight";
-@tailwind utilities;
+@import "tailwindcss";
 
-@layer base {
-  /*
-    Define CSS variables for theming. This allows for easier management
-    of colors and prepares the project for features like dark mode.
-  */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
   :root {
-    /* Light theme (default) based on our modern design */
-    --background-color: #FDF8F5; /* Soft Cream */
-    --foreground-color: #2C3E50; /* Dark Charcoal */
-  }
-
-  /*
-    The code you provided included a dark mode preference. While not yet
-    fully implemented in the design, this structure makes it easy to add
-
-    in the future by configuring tailwind.config.js.
-  */
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --background-color: #2C3E50; /* Dark Charcoal */
-      --foreground-color: #FDF8F5; /* Soft Cream */
-    }
-  }
-
-  /* Apply the base fonts to all heading elements */
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-montserrat;
-  }
-
-  /* Apply base styles to the body using our CSS variables */
-  body {
-    @apply font-lato;
-    background-color: var(--background-color);
-    color: var(--foreground-color);
+    --background: #0a0a0a;
+    --foreground: #ededed;
   }
 }
 
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
