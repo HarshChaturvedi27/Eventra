@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation'; // Import usePathname hook
 import { Menu, X } from 'lucide-react';
 
-// SVG Logo Component
+// SVG Logo Component (no changes here)
 const Logo = ({ className }) => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
     <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="currentColor"/>
@@ -16,11 +17,13 @@ const Logo = ({ className }) => (
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false); // State to track client-side mounting
+  const [isMounted, setIsMounted] = useState(false);
+  
+  const pathname = usePathname();
+  const isHomepage = pathname === '/';
 
   useEffect(() => {
-    setIsMounted(true); // Set to true once the component mounts on the client
-
+    setIsMounted(true);
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
@@ -30,12 +33,17 @@ export default function Navbar() {
     document.addEventListener('scroll', handleScroll);
     return () => document.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
-  
-  // Only apply scroll-based styles if the component is mounted on the client
-  const hasScrolled = isMounted && scrolled;
 
-  const navClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${hasScrolled ? 'bg-white shadow-md' : 'bg-transparent'}`;
-  const linkColor = hasScrolled ? 'text-gray-700' : 'text-white';
+  if (!isMounted) {
+    return null;
+  }
+
+  // --- LOGIC UPDATE ---
+  // The navbar is transparent only if it's the homepage AND we haven't scrolled.
+  const isTransparent = isHomepage && !scrolled;
+  
+  const navClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent' : 'bg-white shadow-md'}`;
+  const linkColor = isTransparent ? 'text-white' : 'text-gray-700';
 
   const navLinks = (
     <>
@@ -51,7 +59,7 @@ export default function Navbar() {
       <div className="container mx-auto px-6 flex justify-between items-center h-20">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <Logo className={`transition-colors duration-300 ${hasScrolled ? 'text-pink-600' : 'text-white'}`} />
+          <Logo className={`transition-colors duration-300 ${isTransparent ? 'text-white' : 'text-pink-600'}`} />
           <span className={`font-bold text-2xl transition-colors duration-300 ${linkColor}`}>
             Eventra
           </span>

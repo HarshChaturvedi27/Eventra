@@ -1,6 +1,7 @@
 export default function CheckoutPage() {
   return (
-    <div className="container mx-auto p-8 max-w-lg">
+    // --- FIX: Added pt-20 to push content below the navbar ---
+    <div className="container mx-auto p-8 pt-20 max-w-lg">
       <h1 className="text-3xl font-bold text-center mb-6">Confirm Your Booking</h1>
       <form className="bg-white p-8 rounded-lg shadow-xl">
         <div className="mb-4">
@@ -22,3 +23,4 @@ export default function CheckoutPage() {
     </div>
   );
 }
+

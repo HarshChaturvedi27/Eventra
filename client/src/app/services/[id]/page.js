@@ -11,7 +11,8 @@ export default function VendorDetailPage({ params }) {
   };
 
   return (
-    <div className="container mx-auto p-8">
+    // --- FIX: Added pt-20 to push content below the navbar ---
+    <div className="container mx-auto p-8 pt-20">
       <div className="bg-white p-8 rounded-xl shadow-xl grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Image Gallery */}
         <div>
@@ -42,3 +43,4 @@ export default function VendorDetailPage({ params }) {
     </div>
   );
 }
+

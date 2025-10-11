@@ -24,7 +24,6 @@ export default function HomePage() {
         <div className="relative text-center z-10 p-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Find Your Perfect Event Vendor</h1>
           <p className="text-lg md:text-xl mb-6 drop-shadow-md">The best vendors in Bihar for your special day.</p>
-          {/* --- SEarch bar --- */}
           <div className="w-full max-w-2xl mx-auto relative">
             <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 h-5 w-5" />
             <input 
@@ -33,7 +32,6 @@ export default function HomePage() {
               className="w-full p-4 pl-12 rounded-full text-gray-800 bg-white/90 focus:outline-none focus:ring-4 focus:ring-pink-300 shadow-lg" 
             />
           </div>
-          {/* --- SEarch bar --- */}
         </div>
       </div>
 
