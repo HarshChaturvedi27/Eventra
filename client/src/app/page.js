@@ -38,7 +38,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-black opacity-50"></div>
         <div className="relative text-center z-10 p-8">
           <h1 className="text-4xl md:text-6xl font-bold mb-4 drop-shadow-lg">Find Your Perfect Event Vendor</h1>
-          <p className="text-lg md:text-xl mb-6 drop-shadow-md">The best vendors in Bihar for your special day.</p>
+          <p className="text-lg md:text-xl mb-6 drop-shadow-md">The best vendors for your special day.</p>
           
           {/* --- FIX: Wrapped input in a form for submission --- */}
           <form onSubmit={handleSearch} className="w-full max-w-2xl mx-auto relative">

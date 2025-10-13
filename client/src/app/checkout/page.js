@@ -3,7 +3,7 @@ export default function CheckoutPage() {
     // --- FIX: Added pt-20 to push content below the navbar ---
     <div className="bg-gray-50 min-h-screen pt-20">
       <div className="container mx-auto p-8 max-w-lg">
-        <h1 className="text-3xl font-bold text-center mb-6">Confirm Your Booking</h1>
+        <h1 className="text-gray-700 text-3xl font-bold text-center mb-6">Confirm Your Booking</h1>
         <form className="bg-white p-8 rounded-lg shadow-xl">
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-semibold mb-2">Full Name</label>
@@ -18,7 +18,7 @@ export default function CheckoutPage() {
             <input type="tel" id="phone" className="w-full p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-pink-400" required />
           </div>
           <button type="button" className="w-full bg-blue-600 text-white py-3 rounded-lg font-bold hover:bg-blue-700 transition-transform transform hover:scale-105">
-            Proceed to Payment (Dummy)
+            Proceed to Payment
           </button>
         </form>
       </div>

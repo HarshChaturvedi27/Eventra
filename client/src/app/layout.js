@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Eventra - Your Perfect Event Partner",
-  description: "Find the best wedding and event services in Bihar.",
+  description: "Find the best wedding and event services.",
 };
 
 export default function RootLayout({ children }) {
