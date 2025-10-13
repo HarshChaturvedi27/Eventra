@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Star, Info, ImageIcon, Sparkles, MessageSquare, HeartHandshake, CheckCircle } from 'lucide-react';
 
-// --- DUMMY DATA (Rolled back to static placeholder) ---
 const vendor = {
   id: 1,
   name: 'Umaid Bhawan Palace',
@@ -33,21 +33,16 @@ const similarVendors = [
 ];
 
 export default function VendorDetailPage({ params }) {
-  // Page now uses the static 'vendor' object above, ignoring params.id for now.
   
   return (
     <div className="bg-gray-50 pt-20">
-      {/* --- FIX: Constrained width for better aesthetics on large screens --- */}
-      <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
+      <div className="container mx-auto max-w-6xl p-4 sm:p-6 lg:p-8">
         
-        {/* --- AESTHETIC INTRO CARD --- */}
         <div className="bg-white p-6 rounded-2xl shadow-lg grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Image Gallery Preview */}
           <div className="grid grid-cols-2 grid-rows-2 gap-3 h-96">
-            <img src={vendor.images[0]} alt="Main" className="w-full h-full object-cover rounded-xl col-span-2 row-span-2" />
+            <Image src={vendor.images[0]} alt="Main" width={800} height={600} className="w-full h-full object-cover rounded-xl col-span-2 row-span-2" />
           </div>
 
-          {/* Vendor Info */}
           <div className="flex flex-col justify-center">
             <p className="text-pink-600 font-semibold">{vendor.category}</p>
             <h1 className="text-4xl lg:text-5xl font-bold my-2 text-gray-800">{vendor.name}</h1>
@@ -58,23 +53,18 @@ export default function VendorDetailPage({ params }) {
             </div>
             <p className="text-3xl font-semibold text-gray-800 mb-8">{vendor.price}</p>
             <div className="flex flex-col sm:flex-row gap-4">
-              {/* --- FIX: Using Link component for navigation --- */}
               <Link href="/checkout" className="w-full text-center bg-pink-600 text-white py-3 px-6 rounded-lg text-lg font-bold hover:bg-pink-700 transition-colors">Book Now</Link>
               <button className="w-full text-center bg-gray-200 text-gray-800 py-3 px-6 rounded-lg text-lg font-bold hover:bg-gray-300 transition-colors">Enquiry</button>
             </div>
           </div>
         </div>
 
-        {/* --- TWO-COLUMN LAYOUT --- */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
-          {/* Left Column: Detailed Info */}
           <div className="lg:col-span-2 space-y-12">
-            {/* About Section */}
             <Section icon={Info} title="About">
               <p className="text-gray-600 leading-relaxed">{vendor.about}</p>
             </Section>
 
-            {/* Services Offered */}
             <Section icon={Sparkles} title="Services Offered">
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
                 {vendor.services.map(service => (
@@ -86,19 +76,16 @@ export default function VendorDetailPage({ params }) {
               </ul>
             </Section>
 
-            {/* Gallery Section */}
             <Section icon={ImageIcon} title="Gallery">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                {vendor.images.map((img, i) => <img key={i} src={img} alt={`Gallery image ${i+1}`} className="w-full h-48 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity" />)}
+                {vendor.images.map((img, i) => <Image key={i} src={img} alt={`Gallery image ${i+1}`} width={300} height={300} className="w-full h-48 object-cover rounded-lg cursor-pointer hover:opacity-90 transition-opacity" />)}
               </div>
             </Section>
              
-            {/* Why Choose Us */}
             <Section icon={HeartHandshake} title="Why Choose Us">
                 <p className="text-gray-600 leading-relaxed">{vendor.whyChooseUs}</p>
             </Section>
 
-            {/* Reviews Section */}
             <Section icon={MessageSquare} title="Reviews">
               <div className="space-y-6">
                 {vendor.reviews.map(review => (
@@ -109,20 +96,18 @@ export default function VendorDetailPage({ params }) {
                         {[...Array(review.rating)].map((_, i) => <Star key={i} className="w-4 h-4 text-amber-500" fill="currentColor"/>)}
                       </div>
                     </div>
-                    <p className="text-gray-600">"{review.comment}"</p>
+                    <p className="text-gray-600">&ldquo;{review.comment}&rdquo;</p>
                   </div>
                 ))}
               </div>
             </Section>
           </div>
 
-          {/* Right Column: Sticky Card */}
           <aside className="hidden lg:block">
             <div className="sticky top-28 p-6 bg-white rounded-xl shadow-lg">
                 <h3 className="text-2xl font-bold text-gray-800">{vendor.name}</h3>
                 <p className="text-gray-600 mt-1">{vendor.price}</p>
                 <div className="flex flex-col gap-3 mt-6">
-                  {/* --- FIX: Using Link component for navigation --- */}
                   <Link href="/checkout" className="w-full text-center bg-pink-600 text-white py-3 px-6 rounded-lg font-bold hover:bg-pink-700 transition-colors">Book Now</Link>
                   <button className="w-full text-center bg-gray-200 text-gray-800 py-3 px-6 rounded-lg font-bold hover:bg-gray-300 transition-colors">Enquiry</button>
                 </div>
@@ -130,13 +115,12 @@ export default function VendorDetailPage({ params }) {
           </aside>
         </div>
 
-        {/* --- YOU MAY ALSO LIKE SECTION --- */}
         <div className="mt-20">
             <h2 className="text-3xl font-bold text-gray-800 mb-8">You May Also Like</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 {similarVendors.map(sv => (
                     <div key={sv.id} className="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-all duration-300">
-                        <img src={sv.image} alt={sv.name} className="w-full h-56 object-cover" />
+                        <Image src={sv.image} alt={sv.name} width={400} height={300} className="w-full h-56 object-cover" />
                         <div className="p-5">
                             <h4 className="text-xl font-bold text-gray-800 truncate">{sv.name}</h4>
                             <p className="text-gray-500 mb-4">{sv.category}</p>
@@ -153,7 +137,6 @@ export default function VendorDetailPage({ params }) {
   );
 }
 
-// Helper component for consistent section styling
 const Section = ({ icon: Icon, title, children }) => (
   <section>
     <div className="flex items-center space-x-3 mb-6">
