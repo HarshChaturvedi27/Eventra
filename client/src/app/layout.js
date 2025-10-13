@@ -1,14 +1,14 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-// --- FIX: Replaced path aliases with relative paths ---
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+// --- FIX: Using the correct path aliases for Vercel ---
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Eventra - Your Perfect Event Partner",
-  description: "Find the best wedding and event services in Bihar.",
+  description: "Find the best wedding and event services.",
 };
 
 export default function RootLayout({ children }) {
