@@ -1,8 +1,8 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-// --- FIX: Using the correct path aliases for Vercel ---
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${inter.className} bg-gray-50`}>
         <Navbar />
-        <main className="min-h-screen">
+        <main>
           {children}
         </main>
         <Footer />
@@ -24,3 +24,4 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+

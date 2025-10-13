@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Import usePathname hook
 import { Menu, X } from 'lucide-react';
 
-// SVG Logo Component (no changes here)
+// SVG Logo Component
 const Logo = ({ className }) => (
   <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
     <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.58 20 4 16.42 4 12C4 7.58 7.58 4 12 4C16.42 4 20 7.58 20 12C20 16.42 16.42 20 12 20Z" fill="currentColor"/>
@@ -13,17 +13,18 @@ const Logo = ({ className }) => (
   </svg>
 );
 
-
 export default function Navbar() {
+  const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
-  
   const pathname = usePathname();
-  const isHomepage = pathname === '/';
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const isScrolled = window.scrollY > 10;
       if (isScrolled !== scrolled) {
@@ -38,12 +39,8 @@ export default function Navbar() {
     return null;
   }
 
-  // --- LOGIC UPDATE ---
-  // The navbar is transparent only if it's the homepage AND we haven't scrolled.
-  const isTransparent = isHomepage && !scrolled;
-  
-  const navClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isTransparent ? 'bg-transparent' : 'bg-white shadow-md'}`;
-  const linkColor = isTransparent ? 'text-white' : 'text-gray-700';
+  const navClass = `fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${(scrolled || !isHomePage) ? 'bg-white shadow-md' : 'bg-transparent'}`;
+  const linkColor = (scrolled || !isHomePage) ? 'text-gray-700' : 'text-white';
 
   const navLinks = (
     <>
@@ -57,40 +54,28 @@ export default function Navbar() {
   return (
     <nav className={navClass}>
       <div className="container mx-auto px-6 flex justify-between items-center h-20">
-        {/* Logo */}
         <Link href="/" className="flex items-center space-x-2">
-          <Logo className={`transition-colors duration-300 ${isTransparent ? 'text-white' : 'text-pink-600'}`} />
-          <span className={`font-bold text-2xl transition-colors duration-300 ${linkColor}`}>
-            Eventra
-          </span>
+          <Logo className={`transition-colors duration-300 ${(scrolled || !isHomePage) ? 'text-pink-600' : 'text-white'}`} />
+          <span className={`font-bold text-2xl transition-colors duration-300 ${linkColor}`}>Eventra</span>
         </Link>
-
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          {navLinks}
-        </div>
-        
+        <div className="hidden md:flex items-center space-x-8">{navLinks}</div>
         <div className="hidden md:flex">
           <Link href="#" className="py-2 px-5 bg-pink-600 text-white rounded-full hover:bg-pink-700 transition-colors shadow-lg">Login</Link>
         </div>
-
-        {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button onClick={() => setIsMenuOpen(!isMenuOpen)} className={`${linkColor}`}>
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
       </div>
-      
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-sm absolute top-20 left-0 w-full">
           <div className="flex flex-col items-center space-y-6 py-8">
-            <Link href="/" className="text-gray-700 hover:text-pink-500 transition-colors text-lg" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link href="/services" className="text-gray-700 hover:text-pink-500 transition-colors text-lg" onClick={() => setIsMenuOpen(false)}>Services</Link>
-            <Link href="#" className="text-gray-700 hover:text-pink-500 transition-colors text-lg" onClick={() => setIsMenuOpen(false)}>About</Link>
-            <Link href="#" className="text-gray-700 hover:text-pink-500 transition-colors text-lg" onClick={() => setIsMenuOpen(false)}>Contact</Link>
-            <Link href="#" className="py-2 px-6 bg-pink-600 text-white rounded-full hover:bg-pink-700 transition-colors" onClick={() => setIsMenuOpen(false)}>Login</Link>
+            <Link href="/" className="text-gray-700 hover:text-pink-500" onClick={() => setIsMenuOpen(false)}>Home</Link>
+            <Link href="/services" className="text-gray-700 hover:text-pink-500" onClick={() => setIsMenuOpen(false)}>Services</Link>
+            <Link href="#" className="text-gray-700 hover:text-pink-500" onClick={() => setIsMenuOpen(false)}>About</Link>
+            <Link href="#" className="text-gray-700 hover:text-pink-500" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+            <Link href="#" className="py-2 px-6 bg-pink-600 text-white rounded-full" onClick={() => setIsMenuOpen(false)}>Login</Link>
           </div>
         </div>
       )}
