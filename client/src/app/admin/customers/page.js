@@ -1,10 +1,10 @@
 export default function ManageCustomersPage() {
-  // Dummy customer data
+  // --- UPDATED: Added City ---
   const customers = [
-    { id: 101, name: 'Priya Sharma', email: 'priya.sharma@email.com', registeredDate: '2025-10-20' },
-    { id: 102, name: 'Rahul Verma', email: 'rahul.v@email.com', registeredDate: '2025-10-18' },
-    { id: 103, name: 'Anjali Singh', email: 'anjali.s@email.com', registeredDate: '2025-10-15' },
-    { id: 104, name: 'Amit Kumar', email: 'amit.k@email.com', registeredDate: '2025-10-12' },
+    { id: 101, name: 'Priya Sharma', email: 'priya.sharma@email.com', city: 'Mumbai', registeredDate: '2025-10-20' },
+    { id: 102, name: 'Rahul Verma', email: 'rahul.v@email.com', city: 'Delhi', registeredDate: '2025-10-18' },
+    { id: 103, name: 'Anjali Singh', email: 'anjali.s@email.com', city: 'Bangalore', registeredDate: '2025-10-15' },
+    { id: 104, name: 'Amit Kumar', email: 'amit.k@email.com', city: 'Pune', registeredDate: '2025-10-12' },
   ];
 
   return (
@@ -17,6 +17,8 @@ export default function ManageCustomersPage() {
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer ID</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+              {/* --- NEW: City Column --- */}
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Registered Date</th>
             </tr>
           </thead>
@@ -26,6 +28,8 @@ export default function ManageCustomersPage() {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{customer.id}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.email}</td>
+                {/* --- NEW: City Data --- */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.city}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{customer.registeredDate}</td>
               </tr>
             ))}
@@ -35,3 +39,4 @@ export default function ManageCustomersPage() {
     </div>
   );
 }
+

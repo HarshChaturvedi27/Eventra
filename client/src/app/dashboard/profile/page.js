@@ -1,14 +1,16 @@
-// We'll likely need 'use client' for form interactions later
-// 'use client';
+// 'use client'; // Will be needed for actual form handling
+
+// --- NEW: Using the same city list as Navbar ---
+const indianCities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur'];
 
 export default function VendorProfilePage() {
-  // Dummy data for the form (replace with actual data later)
+  // Dummy data including city
   const vendorData = {
     name: 'Royal Palace',
     category: 'Venue',
+    city: 'Jaipur', // Added city
     description: 'A beautiful palace for grand weddings...',
     priceInfo: 'Starts at ₹2,00,000',
-    // Add more fields as needed: location, contact, etc.
   };
 
   return (
@@ -24,6 +26,20 @@ export default function VendorProfilePage() {
             defaultValue={vendorData.name}
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-500" 
           />
+        </div>
+
+        {/* --- NEW: City Field --- */}
+        <div>
+          <label htmlFor="city" className="block text-sm font-medium text-gray-700 mb-1">City</label>
+          <select 
+            id="city" 
+            defaultValue={vendorData.city}
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white text-gray-500"
+          >
+            {indianCities.map(city => (
+              <option key={city} value={city}>{city}</option>
+            ))}
+          </select>
         </div>
 
         {/* Category */}
@@ -63,7 +79,7 @@ export default function VendorProfilePage() {
           />
         </div>
 
-        {/* Placeholder for Photo Upload */}
+        {/* Photo Upload */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Photos</label>
           <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">

@@ -1,13 +1,13 @@
 // 'use client'; // Likely needed later for interactions
 
 export default function ManageVendorsPage() {
-  // Dummy vendor data
+  // --- UPDATED: Added City ---
   const vendors = [
-    { id: 1, name: 'The Grand Ballroom', category: 'Venue', status: 'Approved', joinedDate: '2025-10-15' },
-    { id: 2, name: 'Everlasting Clicks', category: 'Photographer', status: 'Approved', joinedDate: '2025-10-10' },
-    { id: 3, name: 'New Catering Co.', category: 'Catering', status: 'Pending', joinedDate: '2025-10-24' },
-    { id: 4, name: 'Fancy Florals', category: 'Decorator', status: 'Pending', joinedDate: '2025-10-23' },
-    { id: 5, name: 'Royal Gardens', category: 'Venue', status: 'Approved', joinedDate: '2025-09-01' },
+    { id: 1, name: 'Umaid Bhawan Palace', category: 'Venue', city: 'Jodhpur', status: 'Approved', joinedDate: '2025-10-15' },
+    { id: 2, name: 'DotDusk Studios', category: 'Photographer', city: 'Delhi', status: 'Approved', joinedDate: '2025-10-10' },
+    { id: 3, name: 'New Catering Co.', category: 'Catering', city: 'Mumbai', status: 'Pending', joinedDate: '2025-10-24' },
+    { id: 4, name: 'Fancy Florals', category: 'Decorator', city: 'Bangalore', status: 'Pending', joinedDate: '2025-10-23' },
+    { id: 5, name: 'The Oberoi Udaivilas', category: 'Venue', city: 'Udaipur', status: 'Approved', joinedDate: '2025-09-01' },
   ];
 
   const getStatusClass = (status) => {
@@ -23,6 +23,8 @@ export default function ManageVendorsPage() {
             <tr>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+              {/* --- NEW: City Column --- */}
+              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">City</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Joined Date</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -33,6 +35,8 @@ export default function ManageVendorsPage() {
               <tr key={vendor.id}>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{vendor.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.category}</td>
+                {/* --- NEW: City Data --- */}
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.city}</td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{vendor.joinedDate}</td>
                 <td className="px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusClass(vendor.status)}`}>
@@ -58,3 +62,4 @@ export default function ManageVendorsPage() {
     </div>
   );
 }
+
