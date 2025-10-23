@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react'; // Added useEffect
-import { useSearchParams } from 'next/navigation'; // To read URL parameters
+// --- NEW: Import Suspense ---
+import React, { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { Star, LayoutGrid, Camera, UtensilsCrossed, Flower2, Building, MapPin } from 'lucide-react'; // Added MapPin
+import { Star, LayoutGrid, Camera, UtensilsCrossed, Flower2, Building, MapPin } from 'lucide-react';
 
-// --- UPDATED: Added City to Vendor Data ---
+// --- VENDOR DATA (as provided previously) ---
 const allVendors = [
   { id: 1, name: 'Umaid Bhawan Palace', category: 'Venue', city: 'Jodhpur', rating: 4.9, price: 450000, image: 'https://images.pexels.com/photos/2775273/pexels-photo-2775273.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
   { id: 2, name: 'DotDusk Studios', category: 'Photographer', city: 'Delhi', rating: 4.9, price: 180000, image: 'https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'},
@@ -28,35 +29,29 @@ const categories = [
     { name: 'Catering', icon: UtensilsCrossed },
     { name: 'Decorator', icon: Flower2 },
 ];
-// --- NEW: List of cities based on vendor data ---
 const availableCities = ['All', ...new Set(allVendors.map(v => v.city))];
 
-export default function ServiceListingPage() {
-  const searchParams = useSearchParams(); // Hook to read URL parameters
+// --- NEW: Extracted the main content into a separate component ---
+function ServicesContent() {
+  const searchParams = useSearchParams(); // This hook now runs inside the Suspense boundary
   const initialCategory = searchParams.get('category') || 'All';
   const initialSearch = searchParams.get('search') || '';
 
-  // --- UPDATED: Added city filter state ---
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
-  const [selectedCity, setSelectedCity] = useState('All'); // New state for city
+  const [selectedCity, setSelectedCity] = useState('All');
   const [priceValue, setPriceValue] = useState(500000);
-  const [searchTerm, setSearchTerm] = useState(initialSearch); // State for search term
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
 
-  // --- NEW: Effect to update filters if URL params change ---
    useEffect(() => {
     setSelectedCategory(searchParams.get('category') || 'All');
     setSearchTerm(searchParams.get('search') || '');
-    // We could also add city param here later if needed
   }, [searchParams]);
 
-
-  // --- UPDATED: Filtering logic now includes city and search ---
   const filteredVendors = allVendors.filter(vendor => {
     const categoryMatch = selectedCategory === 'All' || vendor.category === selectedCategory;
     const cityMatch = selectedCity === 'All' || vendor.city === selectedCity;
     const priceMatch = vendor.price <= priceValue;
-    // Simple search: check if name, category or city includes the search term (case-insensitive)
-    const searchMatch = !searchTerm || 
+    const searchMatch = !searchTerm ||
                         vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         vendor.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
                         vendor.city.toLowerCase().includes(searchTerm.toLowerCase());
@@ -65,12 +60,12 @@ export default function ServiceListingPage() {
   });
 
   return (
-    <div className="bg-gray-50 pt-20">
+    <>
+      {/* Header section with search term display */}
       <header className="bg-pink-50/70 py-12">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold text-gray-800">Find The Perfect Vendor</h1>
           <p className="mt-2 text-lg text-gray-600">Browse our curated selection of top-rated event professionals.</p>
-           {/* --- NEW: Displaying active search term --- */}
            {searchTerm && (
              <p className="mt-4 text-md text-gray-700 font-medium">
                Showing results for: <span className="text-pink-600">{searchTerm}</span>
@@ -78,7 +73,7 @@ export default function ServiceListingPage() {
            )}
         </div>
       </header>
-
+       {/* Main Content Area (Filters + Cards) */}
       <div className="container mx-auto p-6 flex flex-col md:flex-row gap-8">
         <aside className="w-full md:w-1/4 lg:w-1/5">
           <div className="p-6 bg-white rounded-xl shadow-lg sticky top-28">
@@ -100,13 +95,13 @@ export default function ServiceListingPage() {
                     ))}
                 </div>
               </div>
-              {/* --- NEW: City Filter --- */}
+              {/* City Filter */}
               <div>
                 <label className="block font-semibold mb-2 text-gray-700">City</label>
                  <select
                     value={selectedCity}
                     onChange={(e) => setSelectedCity(e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 bg-white text-gray-700"
                  >
                     {availableCities.map(city => (
                         <option key={city} value={city}>{city}</option>
@@ -138,6 +133,7 @@ export default function ServiceListingPage() {
           </div>
         </aside>
 
+        {/* Vendor Cards */}
         <main className="w-full md:w-3/4 lg:w-4/5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredVendors.length > 0 ? (
@@ -149,7 +145,6 @@ export default function ServiceListingPage() {
                       <Star className="w-4 h-4 text-amber-500" fill="currentColor" />
                       <span className="font-bold text-gray-800">{vendor.rating}</span>
                     </div>
-                     {/* --- NEW: Display City on Card --- */}
                      <div className="absolute bottom-2 left-2 bg-black/50 text-white px-2 py-1 rounded text-xs flex items-center space-x-1">
                         <MapPin size={12} />
                         <span>{vendor.city}</span>
@@ -172,7 +167,29 @@ export default function ServiceListingPage() {
           </div>
         </main>
       </div>
+    </>
+  );
+}
+
+
+// --- Main Page Component ---
+export default function ServiceListingPage() {
+  return (
+    <div className="bg-gray-50 pt-20">
+      {/* --- FIX: Wrapped dynamic content in Suspense --- */}
+      <Suspense fallback={<LoadingFallback />}>
+        <ServicesContent />
+      </Suspense>
     </div>
+  );
+}
+
+// --- NEW: Simple Loading Component ---
+function LoadingFallback() {
+  return (
+     <div className="container mx-auto p-6 text-center text-gray-500">
+        Loading vendors...
+     </div>
   );
 }
 
