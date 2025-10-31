@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth } from '@/lib/firebase.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { Building, Camera, UtensilsCrossed, Flower2 } from 'lucide-react';
+import { Building, Camera, UtensilsCrossed, Flower2, CheckCircle } from 'lucide-react';
 
 // Use the same city and category lists for consistency
 const indianCities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur'];
@@ -159,7 +159,7 @@ export default function BecomeAVendorPage() {
             </div>
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Application Submitted!</h2>
             <p className="text-gray-600 mb-6">
-              Thank you for registering! Your application is now pending review by our team. We will notify you at <span className="font-medium text-gray-900">{formData.email}</span> once it's approved.
+              Thank you for registering! Your application is now pending review by our team. We will notify you at <span className="font-medium text-gray-900">{formData.email}</span> once it&apos;s approved.
             </p>
             <button onClick={() => router.push('/')} className="w-full bg-pink-600 text-white py-3 rounded-lg font-bold hover:bg-pink-700 transition-colors">
               Back to Home
@@ -170,3 +170,4 @@ export default function BecomeAVendorPage() {
     </div>
   );
 }
+
