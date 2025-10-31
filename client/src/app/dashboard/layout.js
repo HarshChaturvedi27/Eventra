@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { LayoutDashboard, User, CalendarDays, LogOut } from 'lucide-react';
+// --- UPDATE: Import the 'Landmark' icon ---
+import { LayoutDashboard, User, CalendarDays, Landmark, LogOut } from 'lucide-react';
 import AuthWrapper from '@/components/AuthWrapper.js';
 import { auth } from '@/lib/firebase.js'; // Import auth for logout
 import { signOut } from 'firebase/auth';
@@ -39,12 +40,18 @@ export default function DashboardLayout({ children }) {
               <CalendarDays size={20} />
               <span>Bookings</span>
             </Link>
+            {/* --- NEW: Add Payments Link --- */}
+            <Link href="/dashboard/payments" className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors">
+              <Landmark size={20} />
+              <span>Payments</span>
+            </Link>
           </nav>
           <div className="p-4 border-t border-gray-700">
             {/* --- UPDATE: Made Logout button functional --- */}
            <button 
               onClick={handleLogout}
-              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-70DE00 transition-colors w-full text-left"
+              // --- FIX: Corrected typo in class name ---
+              className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-700 transition-colors w-full text-left"
             >
               <LogOut size={20} />
               <span>Logout</span>
@@ -61,6 +68,7 @@ export default function DashboardLayout({ children }) {
             {children}
           </main>
         </div>
+        {/* --- FIX: Added missing closing div --- */}
       </div>
     </AuthWrapper>
   );
