@@ -1,11 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { usePathname, useRouter } from 'next/navigation'; // Import useRouter
+import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Menu, X, MapPin } from 'lucide-react';
-import { useAuth } from '@/context/AuthContext.js'; // Import our custom auth hook
-import { auth } from '@/lib/firebase.js'; // Import auth for logout
+import { useAuth } from '@/context/AuthContext.js';
+import { auth } from '@/lib/firebase.js';
 import { signOut } from 'firebase/auth';
 
 // SVG Logo Component (remains the same)
@@ -19,10 +19,8 @@ const Logo = ({ className }) => (
 const indianCities = ['Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad', 'Jaipur'];
 
 export default function Navbar() {
-  // --- NEW: Get user state and router ---
-  const { currentUser } = useAuth(); // Get user from our "central brain"
+  const { currentUser } = useAuth();
   const router = useRouter();
-
   const [isMounted, setIsMounted] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,11 +43,9 @@ export default function Navbar() {
     return () => document.removeEventListener('scroll', handleScroll);
   }, [scrolled]);
   
-  // --- NEW: Logout Handler ---
   const handleLogout = async () => {
     try {
       await signOut(auth);
-      // On success, redirect to the login page
       router.push('/login');
     } catch (err) {
       console.error("Failed to log out:", err);
@@ -78,9 +74,12 @@ export default function Navbar() {
     <>
       <Link href="/" className={`${linkColor} hover:text-pink-500 transition-colors`}>Home</Link>
       <Link href="/services" className={`${linkColor} hover:text-pink-500 transition-colors`}>Services</Link>
-      {/* --- NEW: Show Dashboard links if logged in --- */}
+      {/* --- UPDATE: Added Profile/Dashboard links --- */}
       {currentUser && (
-        <Link href="/dashboard" className={`${linkColor} hover:text-pink-500 transition-colors`}>Dashboard</Link>
+        <>
+          <Link href="/profile" className={`${linkColor} hover:text-pink-500 transition-colors`}>My Profile</Link>
+          <Link href="/dashboard" className={`${linkColor} hover:text-pink-500 transition-colors`}>Vendor Dashboard</Link>
+        </>
       )}
     </>
   );
@@ -116,7 +115,7 @@ export default function Navbar() {
            </div>
         </div>
         
-        {/* --- UPDATE: Show Login or Logout button --- */}
+        {/* Login/Logout Button */}
         <div className="hidden md:flex">
           {currentUser ? (
             <button 
@@ -132,7 +131,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile Menu Button (remains the same) */}
+        {/* Mobile Menu Button */}
         <div className="md:hidden flex items-center">
             <div className="relative mr-4">
                  <MapPin size={20} className={iconColor} />
@@ -149,8 +148,12 @@ export default function Navbar() {
           <div className="flex flex-col items-center space-y-6 py-8">
             <Link href="/" className="text-gray-700 hover:text-pink-500 text-lg" onClick={() => setIsMenuOpen(false)}>Home</Link>
             <Link href="/services" className="text-gray-700 hover:text-pink-500 text-lg" onClick={() => setIsMenuOpen(false)}>Services</Link>
+            {/* --- UPDATE: Added Profile/Dashboard links --- */}
             {currentUser && (
-              <Link href="/dashboard" className="text-gray-700 hover:text-pink-500 text-lg" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+              <>
+                <Link href="/profile" className="text-gray-700 hover:text-pink-500 text-lg" onClick={() => setIsMenuOpen(false)}>My Profile</Link>
+                <Link href="/dashboard" className="text-gray-700 hover:text-pink-500 text-lg" onClick={() => setIsMenuOpen(false)}>Vendor Dashboard</Link>
+              </>
             )}
             <div className="w-full px-8">
                 <label htmlFor="mobile-city-select" className="block text-sm font-medium text-gray-500 mb-1 text-center">Select City</label>
@@ -165,7 +168,7 @@ export default function Navbar() {
                     ))}
                  </select>
             </div>
-            {/* --- UPDATE: Show Login or Logout button --- */}
+            {/* Login/Logout Button */}
             {currentUser ? (
               <button 
                 onClick={() => {handleLogout(); setIsMenuOpen(false);}}
