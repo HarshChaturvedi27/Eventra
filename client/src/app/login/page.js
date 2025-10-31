@@ -44,7 +44,7 @@ export default function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required 
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-500" 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" 
             />
           </div>
           <div>
@@ -55,7 +55,7 @@ export default function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required 
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-500" 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" 
             />
           </div>
           <div>
@@ -69,7 +69,8 @@ export default function LoginPage() {
         </form>
         
         <p className="text-center text-gray-600 mt-6">
-          Don't have an account?{' '}
+          {/* --- FIX: Replaced ' with &apos; --- */}
+          Don&apos;t have an account?{' '}
           <Link href="/signup" className="text-pink-600 hover:underline font-medium">
             Sign up
           </Link>
@@ -78,3 +79,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
