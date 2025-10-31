@@ -14,16 +14,14 @@ export default function LoginPage() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
+    setError(null); 
 
     try {
-      // Sign in the user with Firebase
       await signInWithEmailAndPassword(auth, email, password);
-      
-      // On success, redirect to the homepage (or dashboard later)
+      // On success, redirect to the homepage
+      // Future: We can check if user is a 'vendor' and redirect to /dashboard
       router.push('/'); 
     } catch (err) {
-      // Handle errors
       setError('Failed to log in. Please check your email and password.');
       console.error(err);
     }
@@ -68,13 +66,21 @@ export default function LoginPage() {
           </div>
         </form>
         
-        <p className="text-center text-gray-600 mt-6">
-          {/* --- FIX: Replaced ' with &apos; --- */}
-          Don&apos;t have an account?{' '}
-          <Link href="/signup" className="text-pink-600 hover:underline font-medium">
-            Sign up
-          </Link>
-        </p>
+        {/* --- UPDATED: Added links for both customer and vendor signup --- */}
+        <div className="text-center text-gray-600 mt-6 space-y-2">
+          <p>
+            Don&apos;t have an account?{' '}
+            <Link href="/signup" className="text-pink-600 hover:underline font-medium">
+              Sign up as a Customer
+            </Link>
+          </p>
+          <p>
+            Are you a vendor?{' '}
+            <Link href="/become-a-vendor" className="text-green-600 hover:underline font-medium">
+              Register your business
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { auth } from '@/lib/firebase.js'; // Import our auth instance
+import { auth } from '@/lib/firebase.js'; 
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 export default function SignupPage() {
@@ -16,20 +16,16 @@ export default function SignupPage() {
     e.preventDefault();
     setError(null);
 
-    // Basic password validation
     if (password.length < 6) {
       setError('Password must be at least 6 characters long.');
       return;
     }
 
     try {
-      // Create the user with Firebase
       await createUserWithEmailAndPassword(auth, email, password);
-      
       // On success, redirect to the homepage
       router.push('/');
     } catch (err) {
-      // Handle errors
       if (err.code === 'auth/email-already-in-use') {
         setError('This email address is already in use.');
       } else {
@@ -42,7 +38,8 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 pt-20">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-xl">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
+        {/* --- UPDATE: Changed title --- */}
+        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Create a Customer Account</h2>
         {error && <p className="text-red-500 text-center mb-4">{error}</p>}
         
         <form onSubmit={handleSignup} className="space-y-6">
@@ -65,7 +62,7 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required 
-              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400 text-gray-500" 
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400" 
             />
           </div>
           <div>
@@ -88,3 +85,4 @@ export default function SignupPage() {
     </div>
   );
 }
+
